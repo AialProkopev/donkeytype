@@ -10,12 +10,12 @@ export enum CharStatusType {
 	Incorrect = 2,
 }
 
-type countErrorTypes = 'everytime' | 'once';
+type CountErrorTypes = 'everytime' | 'once';
 
 export type TypingOptionsType = {
 	skipCurrentWordOnSpace: boolean;
 	pauseOnError: boolean;
-	countErrors: countErrorTypes;
+	countErrors: CountErrorTypes;
 };
 export type TypingStateType = {
 	text: string;
