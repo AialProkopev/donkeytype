@@ -21,13 +21,14 @@
 }
 html {
   font: 14px 'Poppins', sans-serif;
+  color: var(--sub-color);
 }
 body {
   margin: 0;
   padding: 0;
-  display: flex;
-  min-width: 320px;
   min-height: 100vh;
   background-color: var(--bg-color);
 }
-
+h1 {
+  color: var(--text-color);
+}

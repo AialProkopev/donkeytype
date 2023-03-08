@@ -1,3 +1,5 @@
 export const Menu = () => (
-	<div>Menu</div>
+  <div>
+    <h1 className='text-4xl'>monkeytype</h1>
+  </div>
 );

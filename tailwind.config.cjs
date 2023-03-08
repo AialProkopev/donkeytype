@@ -5,7 +5,14 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        'ama': 'auto minmax(0,1250px) auto',
+      },
+      gridTemplateRows: {
+        'a1a': 'auto 1fr auto',
+      }
+    },
   },
   plugins: [],
 }
