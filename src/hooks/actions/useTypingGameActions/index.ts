@@ -17,8 +17,8 @@ export type ActionItemType =
   | {type: ActionType.SETCURRENTINDEX; payload: number}
   | {type: ActionType._ONTEXTCHANGE; payload: TypingStateType};
 
-export { default as RESET } from './reset';
-export { default as SETCURRENTINDEX } from './setCurrentIndex';
-export { default as END } from './end';
-export { default as TYPINGINSERT } from './typingInsert';
-export { default as TYPINGDELETE } from './typingDelete';
+export {default as RESET} from './reset';
+export {default as SETCURRENTINDEX} from './setCurrentIndex';
+export {default as END} from './end';
+export {default as TYPINGINSERT} from './typingInsert';
+export {default as TYPINGDELETE} from './typingDelete';

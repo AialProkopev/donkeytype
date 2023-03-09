@@ -1,4 +1,4 @@
-import {type TypingStateType} from '@/types/useTypingGameTypes';
+import {type TypingStateType, type CharStatusType} from '@/types/useTypingGameTypes';
 
 export default (state: TypingStateType): TypingStateType => {
 	const {text} = state;
@@ -7,7 +7,7 @@ export default (state: TypingStateType): TypingStateType => {
 		...state,
 		startTime: undefined,
 		endTime: undefined,
-		textState: new Array(text.length).fill(0),
+		textState: new Array(text.length).fill(0) as CharStatusType[],
 		currIndex: -1,
 		currChar: '',
 		correctChar: 0,
