@@ -1,7 +1,11 @@
+import {useState, useEffect} from 'react';
 import useTypingGame from '@/hooks/useTypingGame';
 import {CharStatusType, PhaseType} from '@/types/useTypingGameTypes';
+import {trainingWords, shuffleWords} from '@/data/words';
+
+const someText: string = shuffleWords(trainingWords).join(' ');
+
 export const Game = () => {
-	const someText = 'Hello world from react';
 	const {
 		states: {
 			startTime,
@@ -20,6 +24,18 @@ export const Game = () => {
 		},
 	} = useTypingGame(someText);
 
+	const [shiftCaret, setShiftCaret] = useState<number>(0);
+	useEffect(() => {
+		if (currIndex >= 0) {
+			// Const elem = document.querySelector('#words');
+			// const words = elem ? elem.childNodes : undefined;
+			const words = [...document.querySelectorAll('#letter')];
+			if (words) {
+				setShiftCaret(shiftCaret + words[currIndex].offsetWidth);
+			}
+		}
+	}, [currIndex]);
+
 	const handleKey = (key: any) => {
 		if (key === 'Escape') {
 			resetTyping();
@@ -37,47 +53,33 @@ export const Game = () => {
 	};
 
 	return (
-		<div>
-			<h1>React Typing Game Hook Demo</h1>
-			<p>Click on the text below and start typing (esc to reset)</p>
-			<div
-				className='typing-test'
-				onKeyDown={e => {
-					handleKey(e.key);
-					e.preventDefault();
-				}}
-				tabIndex={0}
-			>
-				{someText.split('').map((char: string, index: number) => {
-					const state = textState[index];
-					const color = state === CharStatusType.Incomplete ? 'black' : state === CharStatusType.Correct ? 'green' : 'red';
-					return (
-						<span
-							key={char + index.toString()}
-							style={{color}}
-							className={currIndex + 1 === index ? 'curr-letter' : ''}
-						>
-							{char}
-						</span>
-					);
-				})}
+		<main>
+			<div className='relative'>
+				<span id='caret' className='absolute w-px h-6' style={{left: shiftCaret}}/>
+			  <div
+					id='words'
+			  	className='text-2xl'
+			  	onKeyDown={e => {
+			  		handleKey(e.key);
+			  		e.preventDefault();
+			  	}}
+			  	tabIndex={0}
+			  >
+			  	{someText.split('').map((char: string, index: number) => {
+			  		const state = textState[index];
+			  		const color = state === CharStatusType.Incomplete ? '' : state === CharStatusType.Correct ? 'correct-letter' : 'error-letter';
+			  		return (
+			  			<span
+								id='letter'
+			  				key={char + index.toString()}
+			  				className={color}
+			  			>
+			  				{char}
+			  			</span>
+			  		);
+			  	})}
+			  </div>
 			</div>
-			<pre>
-				{JSON.stringify(
-					{
-						startTime,
-						endTime,
-						length,
-						currIndex,
-						currChar,
-						correctChar,
-						errorChar,
-						phase: PhaseType[phase],
-					},
-					null,
-					2,
-				)}
-			</pre>
-		</div>
+		</main>
 	);
 };

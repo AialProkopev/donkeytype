@@ -18,6 +18,7 @@
 }
 * {
   box-sizing: border-box;
+  outline: none;
 }
 html {
   font: 14px 'Poppins', sans-serif;
@@ -30,5 +31,15 @@ body {
   background-color: var(--bg-color);
 }
 h1 {
+  color: var(--text-color);
+}
+#caret {
+  background: var(--text-color);
+  margin-top: auto;
+}
+.error-letter {
+  color: var(--error-extra-color);
+}
+.correct-letter {
   color: var(--text-color);
 }
