@@ -25,30 +25,35 @@ export const Game = () => {
 	} = useTypingGame(someText);
 
 	const [shiftCaret, setShiftCaret] = useState<number>(0);
+  const [statusTyping, setStatusTyping] = useState<number>(0);
 	useEffect(() => {
 		if (currIndex >= 0) {
-			// Const elem = document.querySelector('#words');
-			// const words = elem ? elem.childNodes : undefined;
 			const words = [...document.querySelectorAll('#letter')];
 			if (words) {
-				setShiftCaret(shiftCaret + words[currIndex].offsetWidth);
+				if (statusTyping === 1) setShiftCaret(shiftCaret + words[currIndex].offsetWidth);
+				if (statusTyping === 2) setShiftCaret(shiftCaret - words[currIndex].offsetWidth);
 			}
 		}
 	}, [currIndex]);
 
-	const handleKey = (key: any) => {
+  console.log(shiftCaret)
+
+	const handleKey = (key: string) => {
 		if (key === 'Escape') {
 			resetTyping();
+      setStatusTyping(0);
 			return;
 		}
 
 		if (key === 'Backspace') {
 			deleteTyping(false);
+      setStatusTyping(2)
 			return;
 		}
 
 		if (key.length === 1) {
 			insertTyping(key as string);
+      setStatusTyping(1);
 		}
 	};
 

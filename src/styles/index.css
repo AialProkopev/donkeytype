@@ -36,10 +36,20 @@ h1 {
 #caret {
   background: var(--text-color);
   margin-top: auto;
+  transition: left 0.1s linear;
+  animation: caretFlashSmooth 1s infinite;
 }
 .error-letter {
   color: var(--error-extra-color);
 }
 .correct-letter {
   color: var(--text-color);
+}
+@keyframes caretFlashSmooth {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
 }
