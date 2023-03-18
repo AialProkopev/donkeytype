@@ -1,3 +1,4 @@
+import React from 'react';
 import { Game } from './Game';
 import { Menu } from './Menu';
 import { Footer } from './Footer';
@@ -11,7 +12,7 @@ function App() {
         <Game />
         <Footer />
       </div>
-      <div></div>
+      <div>Hello</div>
     </div>
   );
 }
