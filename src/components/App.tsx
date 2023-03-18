@@ -12,6 +12,7 @@ function App() {
         <Game />
         <Footer />
       </div>
+
       <div>Hello</div>
     </div>
   );
