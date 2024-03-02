@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-typing-game-hook": "^1.4.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.24",

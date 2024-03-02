@@ -54,7 +54,6 @@ h1 {
 }
 
 @keyframes caretFlashSmooth {
-
     0%,
     100% {
         opacity: 0;

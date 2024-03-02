@@ -1,80 +1,54 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import useTypingGame from '@/hooks/useTypingGame';
-import { CharStatusType, PhaseType } from '@/types/useTypingGameTypes';
 import { trainingWords, shuffleWords } from '@/data/words';
+import useTypingGame, { CharStateType } from 'react-typing-game-hook';
 
 const someText: string = shuffleWords(trainingWords).join(' ');
 
 export const Game = () => {
     const {
-        states: {
-            startTime,
-            endTime,
-            textState,
-            currIndex,
-            currChar,
-            correctChar,
-            errorChar,
-            phase,
-        },
-        actions: { resetTyping, deleteTyping, insertTyping },
-    } = useTypingGame(someText);
+        states: { chars, charsState },
+        actions: { insertTyping, resetTyping, deleteTyping },
+    } = useTypingGame(someText, { pauseOnError: true });
 
-    const [shiftCaret, setShiftCaret] = useState<number>(0);
-    const [statusTyping, setStatusTyping] = useState<number>(0);
-    useEffect(() => {
-        if (currIndex >= 0) {
-            const words = [...document.querySelectorAll('#letter')];
-            if (words) {
-                if (statusTyping === 1) setShiftCaret(shiftCaret + words[currIndex].offsetWidth);
-                if (statusTyping === 2) setShiftCaret(shiftCaret - words[currIndex].offsetWidth);
+    const handleOnKeyDown = React.useCallback(
+        (e: React.KeyboardEvent<HTMLDivElement>) => {
+            const { key } = e;
+
+            e.preventDefault();
+
+            if (key === 'Escape') {
+                resetTyping();
+                return;
             }
-        }
-    }, [currIndex]);
 
-    console.log(shiftCaret);
+            if (key === 'Backspace') {
+                deleteTyping(false);
+                return;
+            }
 
-    const handleKey = (key: string) => {
-        if (key === 'Escape') {
-            resetTyping();
-            setStatusTyping(0);
-            return;
-        }
-
-        if (key === 'Backspace') {
-            deleteTyping(false);
-            setStatusTyping(2);
-            return;
-        }
-
-        if (key.length === 1) {
-            insertTyping(key as string);
-            setStatusTyping(1);
-        }
-    };
+            if (key.length === 1) {
+                insertTyping(key);
+            }
+        },
+        [deleteTyping, insertTyping, resetTyping]
+    );
 
     return (
         <main>
             <div className="relative">
-                <span id="caret" className="absolute w-px h-6" style={{ left: shiftCaret }} />
-                <div
-                    id="words"
-                    className="text-2xl"
-                    onKeyDown={(e) => {
-                        handleKey(e.key);
-                        e.preventDefault();
-                    }}
-                    tabIndex={0}
-                >
-                    {someText.split('').map((char: string, index: number) => {
-                        const state = textState[index];
+                {/* <span id="caret" className="absolute w-px h-6" style={{ left: shiftCaret }} /> */}
+                <span id="caret" className="absolute w-px h-6" />
+                <div id="words" className="text-2xl" onKeyDown={handleOnKeyDown} tabIndex={0}>
+                    {chars.split('').map((char: string, index: number) => {
+                        const state = charsState[index];
+
                         const color =
-                            state === CharStatusType.Incomplete
+                            state === CharStateType.Incomplete
                                 ? ''
-                                : state === CharStatusType.Correct
+                                : state === CharStateType.Correct
                                 ? 'correct-letter'
                                 : 'error-letter';
+
                         return (
                             <span id="letter" key={char + index.toString()} className={color}>
                                 {char}
